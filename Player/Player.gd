@@ -10,6 +10,9 @@ var movingFor = 0 # how long the player has been moving (sec.)
 var drag = 0 # drag, appllied e
 var direction: int = 0 # current direction
 var lastDirection: int # previous direction
+# shooting vars
+var shootingDelay = 0.3
+var currentDelay = 0
 
 func _ready():
 	position = $StartPosition.position
@@ -17,6 +20,7 @@ func _ready():
 
 func _process(delta):
 	move(delta)
+	shoot(delta)
 
 
 func move(delta):	
@@ -76,3 +80,8 @@ func move(delta):
 	moveDir.x = clamp(moveDir.x, -maxSpeed, maxSpeed)
 	
 	position += moveDir
+
+
+func shoot(delta):
+	if Input.is_action_just_pressed("shoot"):
+		currentDelay = shootingDelay
