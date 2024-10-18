@@ -11,8 +11,11 @@ config_version=4
 [application]
 
 config/name="SpaceShooter"
-run/main_scene="res://Player/Player.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://main.tscn"
+
+[autoload]
+
+main_script="*res://main.gd"
 
 [global]
 
@@ -71,4 +74,3 @@ quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/filters/use_nearest_mipmap_filter=true
-environment/default_environment="res://default_env.tres"

@@ -1,17 +1,14 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://player_spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Player/player_spriteframes.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 31.5, 14.5 )
 
-[node name="character" type="RigidBody2D"]
+[node name="character" type="KinematicBody2D"]
 position = Vector2( -2, 0 )
-gravity_scale = 0.0
 script = ExtResource( 2 )
-maxSpeed = 10.0
-baseSpeed = 6.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 16, 0 )

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://main.gd" type="Script" id=1]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+rail_list = [ NodePath("Rail_0"), NodePath("Rail_1"), NodePath("Rail_2"), NodePath("Rail_3"), NodePath("Rail_4") ]
+
+[node name="character" parent="." instance=ExtResource( 2 )]
+position = Vector2( 244, 82 )
+
+[node name="Rail_0" type="Position2D" parent="."]
+position = Vector2( 512, 50 )
+
+[node name="Rail_1" type="Position2D" parent="."]
+position = Vector2( 512, 175 )
+
+[node name="Rail_2" type="Position2D" parent="."]
+position = Vector2( 512, 300 )
+
+[node name="Rail_3" type="Position2D" parent="."]
+position = Vector2( 512, 425 )
+
+[node name="Rail_4" type="Position2D" parent="."]
+position = Vector2( 512, 550 )
