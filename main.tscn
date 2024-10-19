@@ -5,22 +5,26 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
-rail_list = [ NodePath("Rail_0"), NodePath("Rail_1"), NodePath("Rail_2"), NodePath("Rail_3"), NodePath("Rail_4") ]
+rail_list = [ NodePath("rail_0"), NodePath("rail_1"), NodePath("rail_2"), NodePath("rail_3"), NodePath("rail_4") ]
 
 [node name="character" parent="." instance=ExtResource( 2 )]
-position = Vector2( 244, 82 )
-
-[node name="Rail_0" type="Position2D" parent="."]
-position = Vector2( 512, 50 )
-
-[node name="Rail_1" type="Position2D" parent="."]
-position = Vector2( 512, 175 )
-
-[node name="Rail_2" type="Position2D" parent="."]
 position = Vector2( 512, 300 )
 
-[node name="Rail_3" type="Position2D" parent="."]
-position = Vector2( 512, 425 )
+[node name="rail_0" type="Position2D" parent="."]
+position = Vector2( 512, 50 )
 
-[node name="Rail_4" type="Position2D" parent="."]
+[node name="rail_1" type="Position2D" parent="."]
+position = Vector2( 512, 150 )
+
+[node name="rail_2" type="Position2D" parent="."]
+position = Vector2( 512, 300 )
+
+[node name="rail_3" type="Position2D" parent="."]
+position = Vector2( 512, 450 )
+
+[node name="rail_4" type="Position2D" parent="."]
 position = Vector2( 512, 550 )
+
+[connection signal="sendRailPosition" from="." to="character" method="_on_Main_sendRailPosition"]
+[connection signal="appendBullet" from="character" to="." method="_on_character_appendBullet"]
+[connection signal="getRailPosition" from="character" to="." method="_on_character_getRailPosition"]

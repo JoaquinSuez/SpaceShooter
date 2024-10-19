@@ -11,14 +11,17 @@ var movingFor = 0 # how long the player has been moving (sec.)
 var drag = 0 # drag, appllied e
 var direction = -1 # current direction
 var lastDirection: int # previous direction
-var currentRail = 3
+var currentRail = 2
 # shooting vars
 onready var BULLET = preload("res://Bullet/Bullet.tscn")
-var shootingDelay = 0.2
+var shootingDelay = 0.1
 var currentDelay = 0
+#sigs
+signal getRailPosition(railID)
+signal appendBullet(bullet)
 
 func _ready():
-	position = $StartPosition.position
+	emit_signal("getRailPosition", 2)
 
 
 func _process(delta):
@@ -65,10 +68,15 @@ func move(delta):
 	# check up/down to change rails and set
 	if Input.is_action_just_pressed("move_up"):
 		currentRail -= 1
-		position = main_script.rail_list
+		currentRail = clamp(currentRail, 0, 4)
+		emit_signal("getRailPosition", currentRail)
+		play_animation("wobble_up")
+		
 	elif Input.is_action_just_pressed("move_down"):
 		currentRail += 1
-		position = main_script.get_rail(currentRail).position
+		currentRail = clamp(currentRail, 0, 4)
+		emit_signal("getRailPosition", currentRail)
+		play_animation("wobble_down")
 	
 	# check if there is no left / right input and do things
 	if moveDir.x == 0:
@@ -100,14 +108,32 @@ func move(delta):
 func shoot(delta):
 	if Input.is_action_pressed("shoot"):
 		if currentDelay == 0:
+			var spriteOffset = $AnimatedSprite.offset
 			var bullet = BULLET.instance()
-			bullet.direction = direction
-			bullet.position = position
+			var _position = $BulletSpawner.position + position
+			bullet.direction = direction 
 			bullet.speed = 700
-			main_script.bullet_list.append(bullet)
-			
+			_position.y += spriteOffset.y
+			bullet.position = _position
+			emit_signal("appendBullet", bullet)
 			get_tree().root.add_child(bullet)
 			currentDelay = shootingDelay
 	
 	currentDelay -= delta
 	currentDelay = clamp(currentDelay, 0, shootingDelay)
+
+
+func play_animation(animationID: String):
+	$AnimationPlayer.stop()
+	
+	match animationID:
+		"wobble_up":
+			$AnimationPlayer.play("wobble_up")
+		"wobble_down":
+			$AnimationPlayer.play("wobble_down")
+		_: # default
+			printerr("Animation not found: ", animationID)
+
+
+func _on_Main_sendRailPosition(railPosition) -> void:
+	position.y = railPosition.y

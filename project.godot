@@ -13,10 +13,6 @@ config_version=4
 config/name="SpaceShooter"
 run/main_scene="res://main.tscn"
 
-[autoload]
-
-main_script="*res://main.gd"
-
 [global]
 
 nearest=false
